@@ -1,6 +1,25 @@
 <x-app-layout>
     <div class="py-8">
         <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-2xl font-semibold mb-4">Featured Items</h2>
+            @php
+                $featured1 = [
+                    'https://via.placeholder.com/600?text=Featured+1-1',
+                    'https://via.placeholder.com/600?text=Featured+1-2',
+                    'https://via.placeholder.com/600?text=Featured+1-3',
+                    'https://via.placeholder.com/600?text=Featured+1-4',
+                ];
+                $featured2 = [
+                    'https://via.placeholder.com/600?text=Featured+2-1',
+                    'https://via.placeholder.com/600?text=Featured+2-2',
+                    'https://via.placeholder.com/600?text=Featured+2-3',
+                    'https://via.placeholder.com/600?text=Featured+2-4',
+                ];
+            @endphp
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                <x-product-gallery :images="$featured1" />
+                <x-product-gallery :images="$featured2" />
+            </div>
             <livewire:product-list />
         </div>
     </div>
