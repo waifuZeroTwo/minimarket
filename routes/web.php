@@ -20,7 +20,9 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-Route::view('checkout', 'checkout')->name('checkout');
+Route::view('checkout', 'checkout')
+    ->middleware(['auth'])
+    ->name('checkout');
 
 Route::view('orders', 'orders')
     ->middleware(['auth'])

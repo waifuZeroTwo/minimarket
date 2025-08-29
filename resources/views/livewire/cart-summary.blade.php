@@ -24,4 +24,11 @@
         <button wire:click="applyCoupon($couponCode)" class="px-3 py-2 bg-blue-600 text-white rounded-r">Apply</button>
     </div>
     <x-return-policy />
+
+    <div class="mt-4 flex space-x-2">
+        <a href="{{ route('checkout') }}" class="px-4 py-2 bg-indigo-600 text-white rounded">Checkout</a>
+        @auth
+            <a href="{{ route('checkout', ['oneclick' => 1]) }}" class="px-4 py-2 bg-green-600 text-white rounded">One-Click Checkout</a>
+        @endauth
+    </div>
 </div>
