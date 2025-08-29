@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 Route::view('/', 'home')->name('home');
 
@@ -33,5 +35,14 @@ Route::view('orders', 'orders')
 Route::get('orders/{order}/return', function (string $order) {
     return view('returns', ['order' => $order]);
 })->middleware(['auth'])->name('orders.return');
+
+Route::post('/exit-intent', function (Request $request) {
+    Log::info('Exit intent response', [
+        'action' => $request->input('action'),
+        'user_id' => auth()->id(),
+        'session_id' => $request->session()->getId(),
+    ]);
+    return response()->json(['status' => 'ok']);
+})->name('exit-intent');
 
 require __DIR__.'/auth.php';

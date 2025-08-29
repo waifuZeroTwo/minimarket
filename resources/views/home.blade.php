@@ -32,22 +32,54 @@
         <div class="bg-white dark:bg-gray-800 p-6 rounded shadow text-center">
             <h2 class="text-xl font-semibold">Wait!</h2>
             <p class="mt-2">{{ auth()->user()?->name ? 'Hey '.auth()->user()->name.',' : '' }} take 10% off with code <span class="font-bold">SAVE10</span></p>
-            <button id="close-exit-modal" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded">Continue Shopping</button>
+            <div class="mt-4 flex justify-center space-x-2">
+                <button id="claim-exit-discount" class="px-4 py-2 bg-green-600 text-white rounded">Claim Discount</button>
+                <button id="close-exit-modal" class="px-4 py-2 bg-blue-600 text-white rounded">Continue Shopping</button>
+            </div>
         </div>
     </div>
 
     <script>
         const exitModal = document.getElementById('exit-modal');
+        const claimExitDiscount = document.getElementById('claim-exit-discount');
         const closeExitModal = document.getElementById('close-exit-modal');
-        let exitShown = false;
-        document.addEventListener('mouseleave', e => {
-            if (e.clientY <= 0 && !exitShown) {
-                exitModal.classList.remove('hidden');
-                exitModal.classList.add('flex');
-                exitShown = true;
-            }
+        const sessionKey = 'exitIntentShown';
+
+        function logExitIntent(action) {
+            fetch('{{ route('exit-intent') }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ action }),
+            });
+        }
+
+        function showExitModal() {
+            exitModal.classList.remove('hidden');
+            exitModal.classList.add('flex');
+            sessionStorage.setItem(sessionKey, '1');
+            logExitIntent('shown');
+        }
+
+        if (!sessionStorage.getItem(sessionKey)) {
+            const handleMouseLeave = e => {
+                if (e.clientY <= 0) {
+                    showExitModal();
+                    document.removeEventListener('mouseleave', handleMouseLeave);
+                }
+            };
+            document.addEventListener('mouseleave', handleMouseLeave);
+        }
+
+        claimExitDiscount.addEventListener('click', () => {
+            logExitIntent('claimed');
+            exitModal.classList.add('hidden');
         });
+
         closeExitModal.addEventListener('click', () => {
+            logExitIntent('dismissed');
             exitModal.classList.add('hidden');
         });
     </script>
