@@ -9,6 +9,11 @@
                 <p>Your cart items will appear here.</p>
             </div>
 
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold mb-2">Your Details</h3>
+                @livewire('checkout-form')
+            </div>
+
             <div class="mt-8">
                 <h3 class="text-lg font-semibold mb-2">Returns &amp; Exchanges</h3>
                 <p class="mb-2">Need to return something later? You can request a return or exchange from your <a href="{{ route('orders.index') }}" class="text-indigo-600">order history</a>.</p>
