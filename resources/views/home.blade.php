@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="fixed bottom-6 right-6 w-80">
+    <div class="fixed bottom-6 right-6 w-96">
         <livewire:cart-summary />
     </div>
 

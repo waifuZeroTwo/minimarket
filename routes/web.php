@@ -24,6 +24,8 @@ Route::view('checkout', 'checkout')
     ->middleware(['auth'])
     ->name('checkout');
 
+Route::view('cart', 'cart')->name('cart');
+
 Route::view('orders', 'orders')
     ->middleware(['auth'])
     ->name('orders.index');
