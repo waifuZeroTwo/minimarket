@@ -20,4 +20,14 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
+Route::view('checkout', 'checkout')->name('checkout');
+
+Route::view('orders', 'orders')
+    ->middleware(['auth'])
+    ->name('orders.index');
+
+Route::get('orders/{order}/return', function (string $order) {
+    return view('returns', ['order' => $order]);
+})->middleware(['auth'])->name('orders.return');
+
 require __DIR__.'/auth.php';
