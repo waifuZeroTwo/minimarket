@@ -16,7 +16,7 @@ new class extends Component
     }
 }; ?>
 
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -28,11 +28,20 @@ new class extends Component
                     </a>
                 </div>
 
+                @php
+                    $categories = config('categories', []);
+                    $currentCategory = request()->route('category');
+                @endphp
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @foreach($categories as $category)
+                        <x-nav-link :href="route('categories.show', $category['slug'])" :active="$currentCategory === $category['slug']" wire:navigate>
+                            {{ $category['name'] }}
+                        </x-nav-link>
+                    @endforeach
                 </div>
             </div>
 
@@ -91,6 +100,11 @@ new class extends Component
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @foreach($categories as $category)
+                <x-responsive-nav-link :href="route('categories.show', $category['slug'])" :active="$currentCategory === $category['slug']" wire:navigate>
+                    {{ $category['name'] }}
+                </x-responsive-nav-link>
+            @endforeach
         </div>
 
         <!-- Responsive Settings Options -->
