@@ -23,4 +23,5 @@
         <input type="text" wire:model.defer="couponCode" placeholder="Coupon code" class="flex-1 rounded-l border-gray-300" />
         <button wire:click="applyCoupon($couponCode)" class="px-3 py-2 bg-blue-600 text-white rounded-r">Apply</button>
     </div>
+    <x-return-policy />
 </div>
